@@ -36,7 +36,7 @@ This project solves a real problem I ran into: keeping privacy and network perfo
 - **Remote Ad-Blocking:** Seamless DNS-level filtering on mobile and desktop devices via global Tailscale exit nodes.
 - **Restrictive Network Traversal:** Bypassed Symmetric NAT and aggressive firewalls on Tier-1 academic networks.
 - **Efficacy:** Hit a consistent **40% block rate** on device egress traffic, effectively neutralizing background telemetry from OS and third-party SDKs.
-- **Hardened Blocklists:** Integrated high-volume threat intelligence feeds (OISD Pro) via manual SQL injection, managing a database of **347,000+ records**.
+- **Hardened Blocklists:** Integrated high-volume threat intelligence feeds (OISD Pro) via manual data entry, managing a database of **347,000+ records**.
 - **Low Latency:** Optimized DNS resolution path to maintain sub-70ms RTT even when forced to fallback to DERP relaying.
 
 ## Architecture & Deployment
@@ -50,8 +50,8 @@ The Raspberry Pi runs as a persistent node on a private Tailnet. **MagicDNS** an
 To go beyond Pi-hole's default filtering, I manually loaded ABP-style wildcard patterns directly into the SQLite3 backend:
 
 ```bash
-# Manual injection of OISD threat intelligence feed
-sudo sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled, comment) VALUES ('[https://big.oisd.nl](https://big.oisd.nl)', 1, 'OISD Pro');"
+# Manual database entry of OISD threat intelligence feed
+sudo sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled, comment) VALUES ('https://big.oisd.nl', 1, 'OISD Pro');"
 pihole -g
 
 ```
